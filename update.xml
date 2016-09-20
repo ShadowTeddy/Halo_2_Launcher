@@ -1,0 +1,12 @@
+<file>
+	<name>XLive</name>
+	<version>0.1a</version>
+	<localpath>{InstallDir}\xlive.dll</localpath>
+	<remotepath>{RemoteDir}\xlive\{Version}\xlive.dll</remotepath>
+</file>
+<file>
+	<name>H2Launcher</name>
+	<version>1.0b</version>
+	<localpath>{LauncherDir}\H2Launcher.exe</localpath>
+	<remotepath>{RemoteDir}\H2Launcher\{Version}\H2Launcher.exe</remotepath>
+</file>

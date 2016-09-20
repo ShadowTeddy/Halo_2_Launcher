@@ -1,0 +1,1 @@
+﻿All these classes will eventually be dynamically created upon map load time, we are doing it this way initially for speed rather than other things
