@@ -1,9 +1,12 @@
-﻿using Halo_2_Launcher.Objects;
+﻿using Halo_2_Launcher.Controllers;
+using Halo_2_Launcher.Objects;
+using MetroFramework;
 using MetroFramework.Forms;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -27,6 +30,7 @@ namespace Halo_2_Launcher
                 if (i == H2Launcher.LauncherSettings.StartingMonitor) startingMonitorComboBox.SelectedIndex = i;
             }
             this.windowModeComboBox.SelectedItem = H2Launcher.LauncherSettings.DisplayMode.ToString();
+            this.windowModeComboBox.SelectedIndexChanged += windowModeComboBox_SelectedIndexChanged;
             this.vsyncToggle.Checked = H2Launcher.LauncherSettings.H2VSync;
             this.soundToggle.Checked = H2Launcher.LauncherSettings.Sound;
             this.introToggle.Checked = H2Launcher.LauncherSettings.Intro;
@@ -69,6 +73,27 @@ namespace Halo_2_Launcher
                 }
             }
             H2Launcher.LauncherSettings.SaveSettings();
+        }
+
+        private void forceUpdateButton_Click(object sender, EventArgs e)
+        {
+            File.Delete(Paths.Files + "LocalUpdate.xml");
+            ProcessStartInfo Info = new ProcessStartInfo();
+            Info.Arguments = "/C ping 127.0.0.1 -n 1 -w 5000 > Nul & start Halo_2_Launcher.exe";
+            Info.WindowStyle = ProcessWindowStyle.Hidden;
+            Info.CreateNoWindow = true;
+            Info.WorkingDirectory = Application.StartupPath;
+            Info.FileName = "cmd.exe";
+            Process.Start(Info);
+            Process.GetCurrentProcess().Kill();
+        }
+        public void windowModeComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (windowModeComboBox.SelectedItem.ToString() == "Fullscreen")
+            {
+                MessageBox.Show("Custom resolutions will not work using the Fullscreen option, Please use a standard resolution when selecting this option.");
+                //MetroMessageBox.Show(this, , Fun.PauseIdiomGenerator, System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Warning);
+            }
         }
     }
 }

@@ -54,11 +54,13 @@
             this.metroLabel2 = new MetroFramework.Controls.MetroLabel();
             this.widthTextBox = new MetroFramework.Controls.MetroTextBox();
             this.metroTabPage2 = new MetroFramework.Controls.MetroTabPage();
+            this.forceUpdateButton = new MetroFramework.Controls.MetroButton();
             this.metroTabControl1.SuspendLayout();
             this.metroTabPage1.SuspendLayout();
             this.metroPanel3.SuspendLayout();
             this.metroPanel2.SuspendLayout();
             this.metroPanel1.SuspendLayout();
+            this.metroTabPage2.SuspendLayout();
             this.SuspendLayout();
             // 
             // metroTabControl1
@@ -140,7 +142,7 @@
             this.xboxFOVToggle.Name = "xboxFOVToggle";
             this.xboxFOVToggle.Size = new System.Drawing.Size(80, 17);
             this.xboxFOVToggle.Style = MetroFramework.MetroColorStyle.Blue;
-            this.xboxFOVToggle.TabIndex = 13;
+            this.xboxFOVToggle.TabIndex = 8;
             this.xboxFOVToggle.Text = "Off";
             this.xboxFOVToggle.Theme = MetroFramework.MetroThemeStyle.Light;
             this.xboxFOVToggle.UseSelectable = true;
@@ -153,7 +155,7 @@
             this.introToggle.Name = "introToggle";
             this.introToggle.Size = new System.Drawing.Size(80, 17);
             this.introToggle.Style = MetroFramework.MetroColorStyle.Blue;
-            this.introToggle.TabIndex = 12;
+            this.introToggle.TabIndex = 7;
             this.introToggle.Text = "Off";
             this.introToggle.Theme = MetroFramework.MetroThemeStyle.Light;
             this.introToggle.UseSelectable = true;
@@ -166,7 +168,7 @@
             this.soundToggle.Name = "soundToggle";
             this.soundToggle.Size = new System.Drawing.Size(80, 17);
             this.soundToggle.Style = MetroFramework.MetroColorStyle.Blue;
-            this.soundToggle.TabIndex = 7;
+            this.soundToggle.TabIndex = 6;
             this.soundToggle.Text = "Off";
             this.soundToggle.Theme = MetroFramework.MetroThemeStyle.Light;
             this.soundToggle.UseSelectable = true;
@@ -179,7 +181,7 @@
             this.vsyncToggle.Name = "vsyncToggle";
             this.vsyncToggle.Size = new System.Drawing.Size(80, 17);
             this.vsyncToggle.Style = MetroFramework.MetroColorStyle.Blue;
-            this.vsyncToggle.TabIndex = 6;
+            this.vsyncToggle.TabIndex = 5;
             this.vsyncToggle.Text = "Off";
             this.vsyncToggle.Theme = MetroFramework.MetroThemeStyle.Light;
             this.vsyncToggle.UseSelectable = true;
@@ -273,7 +275,7 @@
             this.windowModeComboBox.Name = "windowModeComboBox";
             this.windowModeComboBox.Size = new System.Drawing.Size(121, 25);
             this.windowModeComboBox.Style = MetroFramework.MetroColorStyle.Blue;
-            this.windowModeComboBox.TabIndex = 7;
+            this.windowModeComboBox.TabIndex = 4;
             this.windowModeComboBox.Theme = MetroFramework.MetroThemeStyle.Light;
             this.windowModeComboBox.UseSelectable = true;
             // 
@@ -286,7 +288,7 @@
             this.startingMonitorComboBox.Name = "startingMonitorComboBox";
             this.startingMonitorComboBox.Size = new System.Drawing.Size(121, 25);
             this.startingMonitorComboBox.Style = MetroFramework.MetroColorStyle.Blue;
-            this.startingMonitorComboBox.TabIndex = 6;
+            this.startingMonitorComboBox.TabIndex = 3;
             this.startingMonitorComboBox.Theme = MetroFramework.MetroThemeStyle.Light;
             this.startingMonitorComboBox.UseSelectable = true;
             // 
@@ -356,7 +358,7 @@
             this.heightTextBox.SelectedText = "";
             this.heightTextBox.Size = new System.Drawing.Size(97, 23);
             this.heightTextBox.Style = MetroFramework.MetroColorStyle.Blue;
-            this.heightTextBox.TabIndex = 3;
+            this.heightTextBox.TabIndex = 2;
             this.heightTextBox.Text = "metroTextBox1";
             this.heightTextBox.Theme = MetroFramework.MetroThemeStyle.Light;
             this.heightTextBox.UseSelectable = true;
@@ -396,7 +398,7 @@
             this.widthTextBox.SelectedText = "";
             this.widthTextBox.Size = new System.Drawing.Size(97, 23);
             this.widthTextBox.Style = MetroFramework.MetroColorStyle.Blue;
-            this.widthTextBox.TabIndex = 5;
+            this.widthTextBox.TabIndex = 1;
             this.widthTextBox.Text = "metroTextBox2";
             this.widthTextBox.Theme = MetroFramework.MetroThemeStyle.Light;
             this.widthTextBox.UseSelectable = true;
@@ -404,6 +406,7 @@
             // 
             // metroTabPage2
             // 
+            this.metroTabPage2.Controls.Add(this.forceUpdateButton);
             this.metroTabPage2.HorizontalScrollbarBarColor = true;
             this.metroTabPage2.HorizontalScrollbarHighlightOnWheel = false;
             this.metroTabPage2.HorizontalScrollbarSize = 10;
@@ -416,6 +419,16 @@
             this.metroTabPage2.VerticalScrollbarBarColor = true;
             this.metroTabPage2.VerticalScrollbarHighlightOnWheel = false;
             this.metroTabPage2.VerticalScrollbarSize = 10;
+            // 
+            // forceUpdateButton
+            // 
+            this.forceUpdateButton.Location = new System.Drawing.Point(3, 15);
+            this.forceUpdateButton.Name = "forceUpdateButton";
+            this.forceUpdateButton.Size = new System.Drawing.Size(418, 139);
+            this.forceUpdateButton.TabIndex = 1;
+            this.forceUpdateButton.Text = "Force Update";
+            this.forceUpdateButton.UseSelectable = true;
+            this.forceUpdateButton.Click += new System.EventHandler(this.forceUpdateButton_Click);
             // 
             // Settings
             // 
@@ -439,6 +452,7 @@
             this.metroPanel2.PerformLayout();
             this.metroPanel1.ResumeLayout(false);
             this.metroPanel1.PerformLayout();
+            this.metroTabPage2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -470,5 +484,6 @@
         private MetroFramework.Controls.MetroToggle introToggle;
         private MetroFramework.Controls.MetroLabel metroLabel10;
         private MetroFramework.Controls.MetroLabel metroLabel11;
+        private MetroFramework.Controls.MetroButton forceUpdateButton;
     }
 }

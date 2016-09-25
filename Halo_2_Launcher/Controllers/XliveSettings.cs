@@ -27,50 +27,86 @@ namespace Halo_2_Launcher.Controllers
             SaveConfigFile(GlobalVariables.InstallPath + "xlive.ini", ConfigFile);
          * 
          * */
-        private string _ProfileName1;
-        private string _ProfileXUID1;
-        private int _OnlineProfile;
-        private int _Debug;
-        private int _AltPorts;
+        private string _ProfileName1 = "player 1";
+        private int _Ports = 1000;
+        private string _loginToken = "";
+        private int _GunGame = 0;
+        private string _InstallPath = "";
         public string ProfileName1
         {
             get { return this._ProfileName1; }
             set { this._ProfileName1 = value; }
         }
-        public string ProfileXUID1
+        public int Ports
         {
-            get { return this._ProfileXUID1; }
-            set { this._ProfileXUID1 = value; }
+            get { return this._Ports; }
+            set { this._Ports = value; }
         }
-        public int OnlineProfile
+        public string loginToken
         {
-            get { return this._OnlineProfile; }
-            set { this._OnlineProfile = value; }
+            get { return this._loginToken; }
+            set { this._loginToken = value; }
         }
-        public int Debug
+        public int GunGame
         {
-            get { return this._Debug; }
-            set { this._Debug = value; }
+            get { return this._GunGame; }
+            set { this._GunGame = value; }
         }
-        public int AltPorts
+        public string InstallPath
         {
-            get { return this._AltPorts; }
-            set { this._AltPorts = value; }
+            get { return this._InstallPath; }
+            set { this._InstallPath = value; }
         }
         public void SaveSettings()
         {
             //ADD SETTINGS CONTROLS FOR THE SETTINGS THAT NEED IT.
             StringBuilder SB = new StringBuilder();
-            SB.AppendLine("profile name 1 = " + this.ProfileName1);
-            SB.AppendLine("profile xuid 1 = " + this.ProfileXUID1.PadLeft(16, '0'));
-            SB.AppendLine("online profile = " + this.OnlineProfile);
-            SB.AppendLine("save directory = XLiveEmu");
-            SB.AppendLine("server = " + 0);
-            SB.AppendLine("debug log = " + 0);
-            SB.AppendLine("debug = " + this.Debug);
-            SB.AppendLine("altports = " + this.AltPorts);
-            SB.AppendLine("arguments = " + Paths.InstallPath);
+            SB.AppendLine("name = " + this.ProfileName1);
+            SB.AppendLine("debug_log = " + 0);
+            SB.AppendLine("port = " + this.Ports);
+            SB.AppendLine("arguments = "); //Not needed as the launcher doesn't pass arguments they are built at runtime based off of the settings.
+            SB.AppendLine("login_token = " + this.loginToken);
+            SB.AppendLine("gungame = " + this.GunGame);
+            SB.AppendLine("install_path = " + this.InstallPath);
             File.WriteAllText(Paths.InstallPath + "xlive.ini", SB.ToString());
+        }
+        public void LoadSettings()
+        {
+            if (!File.Exists(Paths.InstallPath + "xlive.ini")) SaveSettings();
+            else
+            {
+                StreamReader SR = new StreamReader(Paths.InstallPath + "xlive.ini");
+                string[] Lines = SR.ReadToEnd().Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
+                SR.Close();
+                SR.Dispose();
+                foreach (string Line in Lines)
+                {
+                    string[] Setting = Line.Split(new string[] { " = " }, StringSplitOptions.None);
+                    switch (Setting[0])
+                    {
+                        case "name":
+                            {
+                                this.ProfileName1 = Setting[1];
+                                break;
+                            }
+                        case "port":
+                            {
+                                this.Ports = int.Parse(Setting[1]);
+                                break;
+                            }
+                        case "login_token":
+                            {
+                                this.loginToken = Setting[1];
+                                break;
+                            }
+                        case "install_path":
+                            {
+                                this.InstallPath = Setting[1];
+                                break;
+                            }
+                    }
+                }
+            }
         }
     }
 }

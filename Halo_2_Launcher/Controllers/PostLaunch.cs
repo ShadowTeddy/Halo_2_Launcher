@@ -73,6 +73,7 @@ namespace Halo_2_Launcher.Controllers
                         }
                 }
             }
+            this.PostCommands = new Dictionary<string, object[]>();
         }
         private void SetWindowResolution(int Width, int Height)
         {

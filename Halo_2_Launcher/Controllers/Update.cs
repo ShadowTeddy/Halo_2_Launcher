@@ -107,7 +107,7 @@ namespace Halo_2_Launcher.Controllers
                                         )
                     )
                     {
-                        if (File.Exists(((UpdateObject)UO).localpath))
+                        if (File.Exists(((UpdateObject)UO).localpath.Replace("_temp", "")))
                             tUpdateColleciton.AddObject((UpdateObject)UO);
                     }
                     _LocalUpdateCollection = tUpdateColleciton;
@@ -192,7 +192,7 @@ namespace Halo_2_Launcher.Controllers
             {
                 UpdateObject tUO = this._UpdateCollection[i];
                 this._Form.AddToDetails("Downloading " + tUO.name + "....");
-                if (tUO.name == "H2Launcher")
+                if (tUO.name == "Halo_2_Launcher")
                     this._LauncherUpdated = true;
                 WebClient Client = new WebClient();
                 bool _isDownloading = false;
@@ -232,13 +232,16 @@ namespace Halo_2_Launcher.Controllers
                 this._Form.AddToDetails("Restarting Launcher to complete update");
                 Task.Delay(5000);
                 ProcessStartInfo Info = new ProcessStartInfo();
-                Info.Arguments = "/C ping 127.0.0.1 -n 1 -w 5000 > Nul & Del \"" + Application.ExecutablePath + "\" & ping 127.0.0.1 -n 1 -w 2000 > Nul & rename H2Launcher_temp.exe H2Launcher.exe & ping 127.0.0.1 -n 1 -w 2000 > Nul & start H2Launcher.exe";
+                Info.Arguments = "/C ping 127.0.0.1 -n 1 -w 5000 > Nul & Del \"" + Application.ExecutablePath + "\" & ping 127.0.0.1 -n 1 -w 2000 > Nul & rename Halo_2_Launcher_temp.exe Halo_2_Launcher.exe & ping 127.0.0.1 -n 1 -w 2000 > Nul & start Halo_2_Launcher.exe";
                 Info.WindowStyle = ProcessWindowStyle.Hidden;
                 Info.CreateNoWindow = true;
                 Info.WorkingDirectory = Application.StartupPath;
                 Info.FileName = "cmd.exe";
                 Process.Start(Info);
                 Process.GetCurrentProcess().Kill();
+            } else
+            {
+                this._Form.UpdaterFinished();
             }
         }
         //public void 

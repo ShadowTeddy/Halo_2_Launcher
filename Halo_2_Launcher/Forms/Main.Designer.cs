@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            this.rememberCheckBox = new MetroFramework.Controls.MetroCheckBox();
             this.playButton = new MetroFramework.Controls.MetroButton();
             this.passwordTextBox = new MetroFramework.Controls.MetroTextBox();
             this.metroLabel2 = new MetroFramework.Controls.MetroLabel();
@@ -40,18 +39,6 @@
             this.metroLabel3 = new MetroFramework.Controls.MetroLabel();
             this.emailTextBox1 = new MetroFramework.Controls.MetroTextBox();
             this.SuspendLayout();
-            // 
-            // rememberCheckBox
-            // 
-            this.rememberCheckBox.AutoSize = true;
-            this.rememberCheckBox.Location = new System.Drawing.Point(34, 151);
-            this.rememberCheckBox.Name = "rememberCheckBox";
-            this.rememberCheckBox.Size = new System.Drawing.Size(81, 15);
-            this.rememberCheckBox.Style = MetroFramework.MetroColorStyle.Blue;
-            this.rememberCheckBox.TabIndex = 4;
-            this.rememberCheckBox.Text = "Remember";
-            this.rememberCheckBox.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.rememberCheckBox.UseSelectable = true;
             // 
             // playButton
             // 
@@ -109,6 +96,7 @@
             this.usernameTextBox.TabIndex = 1;
             this.usernameTextBox.Theme = MetroFramework.MetroThemeStyle.Light;
             this.usernameTextBox.UseSelectable = true;
+            this.usernameTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.usernameTextBox_KeyPress);
             // 
             // metroLabel1
             // 
@@ -193,7 +181,6 @@
             this.Controls.Add(this.registerButton);
             this.Controls.Add(this.settingsButton);
             this.Controls.Add(this.metroLabel1);
-            this.Controls.Add(this.rememberCheckBox);
             this.Controls.Add(this.usernameTextBox);
             this.Controls.Add(this.playButton);
             this.Controls.Add(this.metroLabel2);
@@ -209,7 +196,7 @@
             this.Tag = new int[] {
         300,
         500};
-            this.Text = "H2PC Launcher V{0}";
+            this.Text = "H2PC Launcher";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.ResumeLayout(false);
@@ -226,7 +213,6 @@
         private MetroFramework.Controls.MetroButton settingsButton;
         private MetroFramework.Controls.MetroButton registerButton;
         public MetroFramework.Controls.MetroTextBox passwordTextBox;
-        public MetroFramework.Controls.MetroCheckBox rememberCheckBox;
         private MetroFramework.Controls.MetroLabel metroLabel3;
         public MetroFramework.Controls.MetroTextBox emailTextBox1;
     }

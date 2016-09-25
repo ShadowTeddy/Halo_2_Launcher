@@ -40,29 +40,14 @@ namespace Halo_2_Launcher
             //This function needs a home in the future.
             return Memory.Pointer(0, true, 0x47CD54, Offset);
         }
-        public static async void StartHalo(string UID, string Gamertag, string LoginToken, string RememberToken, MetroForm Form)
+        public static async void StartHalo(string Gamertag, string LoginToken, MetroForm Form)
         {
             Form.Hide();
             XliveSettings.ProfileName1 = Gamertag;
-            XliveSettings.ProfileXUID1 = UID;
-            XliveSettings.OnlineProfile = 1;//Create a Settings Menu Option for this.
-            XliveSettings.Debug = 0; //Create a Settings Menu Option for this.
-            XliveSettings.AltPorts = 0;//Create a Settings Menu Option for this.
+            XliveSettings.loginToken = LoginToken;
             XliveSettings.SaveSettings();
+            LauncherSettings.SaveSettings();
             await Task.Delay(1);
-            if (RememberToken != string.Empty)
-            {
-                H2Launcher.LauncherSettings.RememberAccount = true;
-                H2Launcher.LauncherSettings.RememberToken = RememberToken;
-                H2Launcher.LauncherSettings.SaveSettings();
-            }
-            else
-            {
-                H2Launcher.LauncherSettings.RememberAccount = false;
-                H2Launcher.LauncherSettings.RememberToken = "";
-                H2Launcher.LauncherSettings.RememberUsername = "";
-                H2Launcher.LauncherSettings.SaveSettings();
-            }
             //File.WriteAllLines(Paths.InstallPath + "token.ini", new string[] { "token=" + LoginToken, "username=" + Gamertag });
             H2Game.RunGame();
             while (Process.GetProcessesByName("halo2").Length == 1)

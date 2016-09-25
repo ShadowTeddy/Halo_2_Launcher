@@ -28,7 +28,6 @@ namespace Halo_2_Launcher.Controllers
             ProcessStartInfo Info = new ProcessStartInfo();
             Info.WorkingDirectory = Paths.InstallPath;
             Info.FileName = "halo2.exe";
-
             RegistryControl.SetScreenResX(H2Launcher.LauncherSettings.ResolutionWidth);
             RegistryControl.SetScreenResY(H2Launcher.LauncherSettings.ResolutionHeight);
             switch (H2Launcher.LauncherSettings.DisplayMode)
