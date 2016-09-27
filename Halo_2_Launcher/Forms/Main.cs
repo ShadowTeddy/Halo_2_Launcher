@@ -33,7 +33,6 @@ namespace Halo_2_Launcher.Forms
                 if (H2Launcher.LauncherSettings.RememberUsername != "")
                 {
                     this.passwordTextBox.Text = "PASSWORDHOLDER";
-                    this.passwordTextBox.ReadOnly = true;
                 }
                 else
                 {
@@ -123,14 +122,10 @@ namespace Halo_2_Launcher.Forms
             this.Invalidate();
         }
 
-        private void usernameTextBox_KeyPress(object sender, KeyPressEventArgs e)
+        private void metroLabel2_Click(object sender, EventArgs e)
         {
-            if (this.passwordTextBox.ReadOnly)
-            {
-                H2Launcher.XliveSettings.loginToken = "";
-                this.passwordTextBox.ReadOnly = false;
-                this.passwordTextBox.Text = "";
-            }
+            this.Text = Fun.PauseIdiomGenerator;
+            this.Invalidate();
         }
     }
 }

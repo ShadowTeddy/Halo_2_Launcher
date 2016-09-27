@@ -27,6 +27,7 @@ namespace Halo_2_Launcher.Controllers
         private volatile bool _RemoteLoaded = false;
         private volatile bool _LocalLoaded = false;
         private Halo_2_Launcher.Forms.Update _Form;
+        private volatile string _Halo2Version = "1.00.00.11122";
         public UpdateController(Halo_2_Launcher.Forms.Update Form)
         {
             this._Form = Form;
@@ -122,8 +123,10 @@ namespace Halo_2_Launcher.Controllers
         }
         public async void CheckUpdates()
         {
+            CheckInstallPath();
             await Task.Run(() =>
             {
+                UpdateGameToLatest();
                 LoadLocalUpdateCollection();
                 LoadRemoteUpdateCollection();
                 bool Update = NeedToUpdate();
@@ -141,26 +144,66 @@ namespace Halo_2_Launcher.Controllers
                     this._Form.UpdaterFinished();
                 }
             });
-            //await Task.Run(() => { LoadLocalUpdateCollection(); });
-            //await Task.Run(() => { LoadRemoteUpdateCollection(); });
-            //bool Update = await Task.Run(() => NeedToUpdate());
-            //if (Update)
-            //{
-            //    await Task.Run(() => { DownloadUpdates(); });
-            //    this._Form.AddToDetails("Updates Complete");
-            //    await Task.Delay(1000);
-            //    await Task.Run(() => { Finished(); });
-            //}
-            //else
-            //{
-            //    this._Form.AddToDetails("No Updates found.");
-            //    await Task.Delay(1000);
-            //    this._Form.UpdaterFinished();
-            //}
-
-            //LoadRemoteUpdateCollection();
-            //DownloadUpdates();
-            //Finished();
+        }
+        private void CheckInstallPath()
+        {
+            if (Paths.InstallPath == "")
+            {
+                string BaseFolder;
+                if (Environment.Is64BitOperatingSystem)
+                    BaseFolder = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86);
+                else
+                    BaseFolder = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
+                using (System.Windows.Forms.OpenFileDialog ofd = new System.Windows.Forms.OpenFileDialog()) //Creates a file dialog window
+                {
+                    ofd.InitialDirectory = BaseFolder; //sets default location in dialog window
+                    ofd.Title = "Navigate to Halo 2 Install Path"; //gives it a title
+                    ofd.Filter = "Halo 2 Executable|halo2.exe"; //filters out unncecessary files
+                    ofd.FilterIndex = 1; //allows only 1 filter index
+                    if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK) //if chosen it will set the file path to the install path
+                    {
+                        Paths.InstallPath = ofd.FileName.Replace(ofd.SafeFileName, "");
+                    }
+                }
+            }
+        }
+        private void UpdateGameToLatest()
+        {
+            string CurrentHalo2Version = FileVersionInfo.GetVersionInfo(Paths.InstallPath + "halo2.exe").FileVersion;
+            this._Form.AddToDetails(string.Format("Halo 2 Version Current Version: {0} Expected Version {1}", CurrentHalo2Version, this._Halo2Version));
+            if(this._Halo2Version != CurrentHalo2Version)
+            {
+                this._Form.AddToDetails("Updating Halo 2 to the latest version");
+                WebClient Client = new WebClient();
+                bool _isDownloading = false;
+                Client.DownloadFileCompleted += (s, e) =>
+                {
+                    this._Form.UpdateProgress(100);
+                    this._Form.AddToDetails("Download Complete.");
+                    Client.Dispose();
+                    Client = null;
+                    _isDownloading = false;
+                };
+                Client.DownloadProgressChanged += (s, e) =>
+                {
+                    this._Form.UpdateProgress(e.ProgressPercentage);
+                };
+                try
+                {
+                    Client.DownloadFileAsync(new Uri(Paths.RemoteUpdatePath + "halo2/Update.exe"), Paths.Downloads + "\\Update.exe");
+                    _isDownloading = true;
+                }
+                catch (Exception) { throw new Exception("Error"); }
+                while (_isDownloading) { }
+                this._Form.AddToDetails("Waiting for update to finish installing");
+                bool _isUpdating = true;
+                Process.Start(Paths.Downloads + "\\Update.exe");
+                while (_isUpdating)
+                {
+                    if (Process.GetProcessesByName("Update").Length == 0)
+                        _isUpdating = false;
+                }
+            }
         }
         private bool NeedToUpdate()
         {

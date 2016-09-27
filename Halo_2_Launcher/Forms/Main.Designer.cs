@@ -46,7 +46,7 @@
             this.playButton.FontWeight = MetroFramework.MetroButtonWeight.Regular;
             this.playButton.Location = new System.Drawing.Point(23, 172);
             this.playButton.Name = "playButton";
-            this.playButton.Size = new System.Drawing.Size(193, 31);
+            this.playButton.Size = new System.Drawing.Size(115, 31);
             this.playButton.Style = MetroFramework.MetroColorStyle.Blue;
             this.playButton.TabIndex = 5;
             this.playButton.Text = "Play";
@@ -58,9 +58,9 @@
             // 
             this.passwordTextBox.Lines = new string[0];
             this.passwordTextBox.Location = new System.Drawing.Point(124, 91);
-            this.passwordTextBox.MaxLength = 18;
+            this.passwordTextBox.MaxLength = 255;
             this.passwordTextBox.Name = "passwordTextBox";
-            this.passwordTextBox.PasswordChar = '⚽';
+            this.passwordTextBox.PasswordChar = '•';
             this.passwordTextBox.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.passwordTextBox.SelectedText = "";
             this.passwordTextBox.Size = new System.Drawing.Size(184, 23);
@@ -81,12 +81,13 @@
             this.metroLabel2.TabIndex = 4;
             this.metroLabel2.Text = "Password:";
             this.metroLabel2.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.metroLabel2.Click += new System.EventHandler(this.metroLabel2_Click);
             // 
             // usernameTextBox
             // 
             this.usernameTextBox.Lines = new string[0];
             this.usernameTextBox.Location = new System.Drawing.Point(124, 62);
-            this.usernameTextBox.MaxLength = 15;
+            this.usernameTextBox.MaxLength = 255;
             this.usernameTextBox.Name = "usernameTextBox";
             this.usernameTextBox.PasswordChar = '\0';
             this.usernameTextBox.ScrollBars = System.Windows.Forms.ScrollBars.None;
@@ -96,7 +97,6 @@
             this.usernameTextBox.TabIndex = 1;
             this.usernameTextBox.Theme = MetroFramework.MetroThemeStyle.Light;
             this.usernameTextBox.UseSelectable = true;
-            this.usernameTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.usernameTextBox_KeyPress);
             // 
             // metroLabel1
             // 
@@ -114,16 +114,16 @@
             // 
             // settingsButton
             // 
-            this.settingsButton.FontSize = MetroFramework.MetroButtonSize.Medium;
+            this.settingsButton.FontSize = MetroFramework.MetroButtonSize.Tall;
             this.settingsButton.FontWeight = MetroFramework.MetroButtonWeight.Regular;
             this.settingsButton.ForeColor = System.Drawing.Color.DimGray;
-            this.settingsButton.Location = new System.Drawing.Point(275, 22);
+            this.settingsButton.Location = new System.Drawing.Point(233, 172);
             this.settingsButton.Margin = new System.Windows.Forms.Padding(3, 3, 3, 5);
             this.settingsButton.Name = "settingsButton";
-            this.settingsButton.Size = new System.Drawing.Size(33, 28);
+            this.settingsButton.Size = new System.Drawing.Size(75, 31);
             this.settingsButton.Style = MetroFramework.MetroColorStyle.Blue;
             this.settingsButton.TabIndex = 6;
-            this.settingsButton.Text = "🔧";
+            this.settingsButton.Text = "Settings";
             this.settingsButton.Theme = MetroFramework.MetroThemeStyle.Light;
             this.settingsButton.UseSelectable = true;
             this.settingsButton.Click += new System.EventHandler(this.settingsButton_Click);
@@ -132,9 +132,9 @@
             // 
             this.registerButton.FontSize = MetroFramework.MetroButtonSize.Tall;
             this.registerButton.FontWeight = MetroFramework.MetroButtonWeight.Regular;
-            this.registerButton.Location = new System.Drawing.Point(222, 172);
+            this.registerButton.Location = new System.Drawing.Point(144, 172);
             this.registerButton.Name = "registerButton";
-            this.registerButton.Size = new System.Drawing.Size(86, 31);
+            this.registerButton.Size = new System.Drawing.Size(83, 31);
             this.registerButton.Style = MetroFramework.MetroColorStyle.Blue;
             this.registerButton.TabIndex = 5;
             this.registerButton.Tag = "";
@@ -175,6 +175,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BorderStyle = MetroFramework.Forms.MetroFormBorderStyle.FixedSingle;
             this.ClientSize = new System.Drawing.Size(331, 221);
             this.Controls.Add(this.metroLabel3);
             this.Controls.Add(this.emailTextBox1);

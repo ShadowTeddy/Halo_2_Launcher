@@ -23,14 +23,20 @@ namespace Halo_2_Launcher.Objects
                 if (Environment.Is64BitOperatingSystem)
                 {
                     if (Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Wow6432Node\Microsoft\Microsoft Games\Halo 2\1.0\") == null)
+                    {
                         Registry.LocalMachine.CreateSubKey(@"SOFTWARE\Wow6432Node\Microsoft\Microsoft Games\Halo 2\1.0\");
+                        return "";
+                    }
                     return (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Microsoft\Microsoft Games\Halo 2\1.0", "GameInstallDir", null);
 
                 }
                 else
                 {
                     if (Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Microsoft Games\Halo 2\1.0\") == null)
+                    {
                         Registry.LocalMachine.CreateSubKey(@"SOFTWARE\Microsoft\Microsoft Games\Halo 2\1.0\");
+                        return "";
+                    }
                     return (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Microsoft Games\Halo 2\1.0", "GameInstallDir", null);
                 }
             }
@@ -105,6 +111,7 @@ namespace Halo_2_Launcher.Objects
         public static string RemoteUpdateXML
         {
             get { return RemotePath + "update.xml"; }
+            //get { return RemotePath + "dev_update.xml"; }
         }
     }
 }

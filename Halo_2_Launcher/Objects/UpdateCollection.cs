@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -63,6 +64,9 @@ namespace Halo_2_Launcher.Objects
         {
             get
             {
+                string LocalDirectoryPath = Path.GetDirectoryName(FormatPath(this._localpath));
+                if (!Directory.Exists(LocalDirectoryPath))
+                    Directory.CreateDirectory(LocalDirectoryPath);
                 return FormatPath(this._localpath);
             }
             set

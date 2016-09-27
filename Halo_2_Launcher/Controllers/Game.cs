@@ -59,7 +59,7 @@ namespace Halo_2_Launcher.Controllers
             if (!H2Launcher.LauncherSettings.Sound) Info.Arguments += "-nosound ";
             if (!H2Launcher.LauncherSettings.H2VSync) Info.Arguments += "-novsync ";
             if (H2Launcher.LauncherSettings.H2XFOV) H2Launcher.Post.AddCommand("SetXboxFOV");
-            H2Launcher.Post.AddCommand("ApplyCrashFix");
+            //H2Launcher.Post.AddCommand("ApplyCrashFix");
             Process.Start(Info);
             H2Launcher.Post.RunCommands();
         }

@@ -18,6 +18,7 @@ namespace Halo_2_Launcher
 {
     public partial class Settings : MetroForm
     {
+        private bool _SettingsSaved = false;
         public Settings()
         {
             InitializeComponent();
@@ -35,6 +36,8 @@ namespace Halo_2_Launcher
             this.soundToggle.Checked = H2Launcher.LauncherSettings.Sound;
             this.introToggle.Checked = H2Launcher.LauncherSettings.Intro;
             this.xboxFOVToggle.Checked = H2Launcher.LauncherSettings.H2XFOV;
+            this.debugLogToggle.Checked = (H2Launcher.XliveSettings.DebugLog == 1) ? true : false;
+            this.fpsToggle.Checked = (H2Launcher.XliveSettings.FPSCap == 1) ? true : false;
             #endregion
         }
 
@@ -45,34 +48,13 @@ namespace Halo_2_Launcher
 
         private void Settings_FormClosing(object sender, FormClosingEventArgs e)
         {
-            H2Launcher.LauncherSettings.ResolutionHeight = int.Parse(this.heightTextBox.Text);
-            H2Launcher.LauncherSettings.ResolutionWidth = int.Parse(this.widthTextBox.Text);
-            H2Launcher.LauncherSettings.DisplayMode = (H2DisplayMode)Enum.Parse(typeof(H2DisplayMode), this.windowModeComboBox.SelectedItem.ToString());
-            H2Launcher.LauncherSettings.StartingMonitor = startingMonitorComboBox.SelectedIndex;
-            H2Launcher.LauncherSettings.H2VSync = vsyncToggle.Checked;
-            H2Launcher.LauncherSettings.Sound = soundToggle.Checked;
-            H2Launcher.LauncherSettings.Intro = introToggle.Checked;
-            H2Launcher.LauncherSettings.H2XFOV = xboxFOVToggle.Checked;
-            if (!introToggle.Checked)
+            if (!_SettingsSaved)
             {
-                if (!Directory.Exists(Paths.InstallPath + "\\movie.bak"))
+                if (MessageBox.Show("Do you want to save all the changed settings?", Fun.PauseIdiomGenerator, MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
-                    Directory.Move(Paths.InstallPath + "\\movie", Paths.InstallPath + "\\movie.bak");
-                    Directory.CreateDirectory(Paths.InstallPath + "\\movie");
-                    File.Create(Paths.InstallPath + "\\movie\\credits_60.wmv").Close();
-                    File.Create(Paths.InstallPath + "\\movie\\intro_60.wmv").Close();
-                    File.Create(Paths.InstallPath + "\\movie\\intro_low_60.wmv").Close();
+                    SaveSettings();
                 }
             }
-            else
-            {
-                if (File.Exists(Paths.InstallPath + "\\movie.bak"))
-                {
-                    Directory.Delete(Paths.InstallPath + "\\movie", true);
-                    Directory.Move(Paths.InstallPath + "\\movie.bak", Paths.InstallPath + "\\movie");
-                }
-            }
-            H2Launcher.LauncherSettings.SaveSettings();
         }
 
         private void forceUpdateButton_Click(object sender, EventArgs e)
@@ -94,6 +76,53 @@ namespace Halo_2_Launcher
                 MessageBox.Show("Custom resolutions will not work using the Fullscreen option, Please use a standard resolution when selecting this option.");
                 //MetroMessageBox.Show(this, , Fun.PauseIdiomGenerator, System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Warning);
             }
+        }
+
+        private void applyButton_Click(object sender, EventArgs e)
+        {
+            _SettingsSaved = true;
+            SaveSettings();
+            this.Close();
+        }
+
+        private void cancelButton_Click(object sender, EventArgs e)
+        {
+            _SettingsSaved = true;
+            this.Close();
+        }
+        private void SaveSettings()
+        {
+            H2Launcher.LauncherSettings.ResolutionHeight = int.Parse(this.heightTextBox.Text);
+            H2Launcher.LauncherSettings.ResolutionWidth = int.Parse(this.widthTextBox.Text);
+            H2Launcher.LauncherSettings.DisplayMode = (H2DisplayMode)Enum.Parse(typeof(H2DisplayMode), this.windowModeComboBox.SelectedItem.ToString());
+            H2Launcher.LauncherSettings.StartingMonitor = startingMonitorComboBox.SelectedIndex;
+            H2Launcher.LauncherSettings.H2VSync = vsyncToggle.Checked;
+            H2Launcher.LauncherSettings.Sound = soundToggle.Checked;
+            H2Launcher.LauncherSettings.Intro = introToggle.Checked;
+            H2Launcher.LauncherSettings.H2XFOV = xboxFOVToggle.Checked;
+            H2Launcher.XliveSettings.DebugLog = (this.debugLogToggle.Checked) ? 1 : 0;
+            H2Launcher.XliveSettings.FPSCap = (this.fpsToggle.Checked) ? 1 : 0;
+            if (!introToggle.Checked)
+            {
+                if (!Directory.Exists(Paths.InstallPath + "\\movie.bak"))
+                {
+                    Directory.Move(Paths.InstallPath + "\\movie", Paths.InstallPath + "\\movie.bak");
+                    Directory.CreateDirectory(Paths.InstallPath + "\\movie");
+                    File.Create(Paths.InstallPath + "\\movie\\credits_60.wmv").Close();
+                    File.Create(Paths.InstallPath + "\\movie\\intro_60.wmv").Close();
+                    File.Create(Paths.InstallPath + "\\movie\\intro_low_60.wmv").Close();
+                }
+            }
+            else
+            {
+                if (File.Exists(Paths.InstallPath + "\\movie.bak"))
+                {
+                    Directory.Delete(Paths.InstallPath + "\\movie", true);
+                    Directory.Move(Paths.InstallPath + "\\movie.bak", Paths.InstallPath + "\\movie");
+                }
+            }
+            H2Launcher.LauncherSettings.SaveSettings();
+            H2Launcher.XliveSettings.SaveSettings();
         }
     }
 }
